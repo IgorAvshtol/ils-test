@@ -1,5 +1,7 @@
-# :maple_leaf: react-leaflet-osrm-example
-
 Using the given set of routes (table 1), implement a screen in which there will be a table with a list of routes on the left, and a map on the right. When you select a line with a route in the table, the selected line should be highlighted, and the route points should be displayed on the map in the form of markers and a polyline (polyline) of the track of movement along the route points, obtained from the OSRM road track building service (or another). When you select a route in the table, the map is centered and scaled in such a way that the entire route must fall within the map's visibility area. Only one route can be displayed on the map at a time - the selected one.
 
 To display the map, it is desirable to use the Leaflet package, for components - AntDesign, to store the state of components and data, be sure to use Redux (redux-toolkit), to respond to events - Sagas. You can use React Create App or Vite as the basis of the application. Use only functional components and predominantly functional programming. Distribute code into directories based on function affiliation: components, selectors, reducers, sagas, HTTP services, helpers, etc. Be sure to use sagas to get a track by points, and be sure to use any HTTP service to access the track building API. Provide error handling from HTTP services. CSS styles can be written in the SASS/LESS preprocessor.
+
+ps I used the initial coordinates of Mount Elbrus, because this is my dream.
+
+["https://ils-test-cyan.vercel.app/"]

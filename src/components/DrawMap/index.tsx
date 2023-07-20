@@ -20,9 +20,9 @@ interface DrawMapProps {
 export function DrawMap({ center, zoom }: DrawMapProps) {
   const route = useSelector(selectRoute);
   const [points, setPoints] = useState([]);
-  const [originMarker, setOriginMarker] = useState<Point | null>(null);
+  const [startMarker, setStartMarker] = useState<Point | null>(null);
   const [betweenMarker, setBetweenMarker] = useState<Point | null>(null);
-  const [destinationMarker, setDestinationMarker] = useState<Point | null>(null);
+  const [finishMarker, setFinishMarker] = useState<Point | null>(null);
   const [bounds, setBounds] = useState<LatLngBoundsExpression>([]);
 
   useEffect(() => {
@@ -35,9 +35,9 @@ export function DrawMap({ center, zoom }: DrawMapProps) {
       const startPoint = { lat: route.start[0], lng: route.start[1] };
       const betweenPoint = { lat: route.between[0], lng: route.between[1] };
       const finishPoint = { lat: route.finish[0], lng: route.finish[1] };
-      setOriginMarker(startPoint);
+      setStartMarker(startPoint);
       setBetweenMarker(betweenPoint);
-      setDestinationMarker(finishPoint);
+      setFinishMarker(finishPoint);
       const newBounds = [startPoint, betweenPoint, finishPoint].map((m) => [
         m.lat,
         m.lng,
@@ -46,22 +46,16 @@ export function DrawMap({ center, zoom }: DrawMapProps) {
     }
   }, [route]);
 
-  const handleSetBounds = (newBounds: LatLngBoundsExpression) => {
-    setBounds(newBounds);
-  };
-
   return (
     <MapContainer bounds={bounds} center={center} zoom={zoom}>
       <TileLayer url='https://{s}.tile.osm.org/{z}/{x}/{y}.png' />
       <Polyline pathOptions={{ color: 'blue' }} positions={points}>
         <Popup>Polygon</Popup>
       </Polyline>
-      {originMarker && <Marker position={originMarker} text='Старт' />}
+      {startMarker && <Marker position={startMarker} text='Старт' />}
       {betweenMarker && <Marker position={betweenMarker} text='Промежуточная точка' />}
-      {destinationMarker && (
-        <Marker position={destinationMarker} text='Финиш' />
-      )}
-      <AutoFitBound bounds={bounds} zoom={4} handleSetBounds={handleSetBounds} />
+      {finishMarker && <Marker position={finishMarker} text='Финиш' />}
+      <AutoFitBound bounds={bounds} />
     </MapContainer>
   );
 }
